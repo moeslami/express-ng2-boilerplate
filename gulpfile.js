@@ -17,7 +17,7 @@ gulp.task('less', function () {
 var tsProject = ts.createProject('tsconfig.json');
 
 gulp.task('scripts', function() {
-var tsResult = gulp.src('public/app/*.ts')
+var tsResult = gulp.src('public/app/**/*.ts')
 .pipe(ts(tsProject));
  
 return merge([ // Merge the two output streams, so this task is finished when the IO of both operations are done. 
@@ -28,14 +28,14 @@ return merge([ // Merge the two output streams, so this task is finished when th
 
 gulp.task('watch', ['less', 'scripts'], function() {
   gulp.watch('./public/css/*.less', ['less']);
-  gulp.watch('./public/app/*.ts', ['scripts']);
+  gulp.watch('./public/app/**/*.ts', ['scripts']);
 });
 
 gulp.task('develop', function () {
   livereload.listen();
   nodemon({
     script: 'server/bin/www',
-    ext: 'js handlebars coffee',
+    ext: 'js handlebars',
     stdout: false
   }).on('readable', function () {
     this.stdout.on('data', function (chunk) {
